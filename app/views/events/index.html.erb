@@ -1,0 +1,15 @@
+<h1>Upcoming Events</h1>
+
+<% if @events.any? %>
+  <ul>
+    <% @events.each do |event| %>
+      <li>
+        <strong><%= event.name %></strong><br>
+        Location: <%= event.location %><br>
+        Date: <%= event.date.strftime("%B %d, %Y") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No events found.</p>
+<% end %>
