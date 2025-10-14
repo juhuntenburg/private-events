@@ -1,0 +1,10 @@
+<h1><%= @event.name %></h1>
+
+<p><strong>Location:</strong> <%= @event.location %></p>
+<p><strong>Date:</strong> <%= @event.date&.strftime("%B %d, %Y") %></p>
+<p><strong>Hosted by:</strong> <%= link_to(@event.host.name, user_path(@event.host)) %></p>
+
+
+<p>
+  <%= link_to "Back to events", events_path %>
+</p>

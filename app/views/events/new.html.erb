@@ -1,0 +1,33 @@
+<h1>New Event</h1>
+
+<% if @event.errors.any? %>
+  <h3><%= pluralize(@event.errors.count, "error") %> prevented this event from being saved:</h3>
+  <ul>
+    <% @event.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @event do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </p>
+
+  <p>
+    <%= f.label :date %><br>
+    <%= f.date_field :date %>
+  </p>
+
+  <p>
+    <%= f.submit "Create Event" %>
+  </p>
+<% end %>
+
+<p><%= link_to "Back to events", events_path %></p>

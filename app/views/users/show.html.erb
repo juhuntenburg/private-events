@@ -1,0 +1,17 @@
+<h1><%= @user.name %></h1>
+
+<p><strong>Email:</strong> <%= @user.email %></p>
+
+<p><strong>Hosted Events:</strong></p>
+
+<% if @user_events.any? %>
+  <ul>
+    <% @user_events.each do |event| %>
+      <li>
+        <%= event.name %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>User is not hosting any events.</p>
+<% end %>

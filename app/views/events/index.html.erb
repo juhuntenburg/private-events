@@ -4,12 +4,15 @@
   <ul>
     <% @events.each do |event| %>
       <li>
-        <strong><%= event.name %></strong><br>
-        Location: <%= event.location %><br>
-        Date: <%= event.date.strftime("%B %d, %Y") %>
+        <strong><%= link_to(event.name, event_path(event)) %></strong><br>
+        Hosted by: <%= link_to(event.host.name, user_path(event.host)) %>
       </li>
     <% end %>
   </ul>
 <% else %>
   <p>No events found.</p>
 <% end %>
+
+<p>
+  <%= link_to "Create New Event", new_event_path, class: "btn" %>
+</p>
