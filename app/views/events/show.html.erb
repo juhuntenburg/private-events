@@ -4,7 +4,11 @@
 <p><strong>Date:</strong> <%= @event.date&.strftime("%B %d, %Y") %></p>
 <p><strong>Hosted by:</strong> <%= link_to(@event.host.name, user_path(@event.host)) %></p>
 
-<%= button_to "Attend Event", attendances_path, params: { attendance: {attended_event_id: @event.id } } %>
+<%= button_to "Attend Event", attendances_path,
+              params: { attendance: {
+                attended_event_id: @event.id,
+                attendee_id: current_user}
+              } %>
 
 <p>
   <%= link_to "Back to events", events_path %>
