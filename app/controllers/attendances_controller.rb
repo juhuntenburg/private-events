@@ -2,15 +2,12 @@ class AttendancesController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
   def create
-    if Attendance.exists?(attendance_params)
-      redirect_to user_path(current_user), notice: "You already registered for this event."
+    @attendance = Attendance.new(attendance_params)
+    if @attendance.save
+      Invitation.find_by(invitee_id: attendance_params[:attendee_id], invited_event_id: attendance_params[:attended_event_id]).destroy
+      redirect_to user_path(current_user), notice: "Attendance confirmed."
     else
-      @attendance = Attendance.new(attendance_params)
-      if @attendance.save
-        redirect_to user_path(current_user), notice: "Attendance confirmed."
-      else
-        redirect_to events_path, notice: "Attendance not registered."
-      end
+      redirect_to events_path, notice: "Attendance not registered."
     end
 
   end

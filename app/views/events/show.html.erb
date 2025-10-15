@@ -18,11 +18,29 @@
   <p>No attendees yet.</p>
 <% end %>
 
-<%= button_to "Attend Event", attendances_path,
-              params: { attendance: {
-                attended_event_id: @event.id,
-                attendee_id: current_user}
-              } %>
+
+<p>
+<% if current_user == @event.host %>
+    <%= form_with model: Invitation.new do |f| %>
+      <%= f.hidden_field :invited_event_id, value: @event.id %>
+      <strong><%= f.label :invitee_id, "Invite someone" %></strong><br>
+      <%= f.collection_select :invitee_id, @invitees, :id, :name, prompt: "Select a user" %><br>
+    </div>
+
+    <%= f.submit "Invite" %>
+  <% end %>
+<% end %>
+</p>
+
+</p>
+<% if @event.invitees.exists?(current_user.id) %>
+  <%= button_to "Accept invitation", attendances_path,
+                params: { attendance: {
+                  attended_event_id: @event.id,
+                  attendee_id: current_user}
+                } %>
+<% end %>
+</p>
 
 <p>
   <%= link_to "Back to events", events_path %>

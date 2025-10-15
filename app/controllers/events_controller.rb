@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :new]
+  before_action :authenticate_user!, only: [:create, :new, :show]
 
   def index
     @events = Event.order(:date)
@@ -7,6 +7,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @invitees = User.where.not(id: [current_user.id] + @event.attendee_ids).order(:name)
   end
 
   def new
