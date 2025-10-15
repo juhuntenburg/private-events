@@ -4,6 +4,20 @@
 <p><strong>Date:</strong> <%= @event.date&.strftime("%B %d, %Y") %></p>
 <p><strong>Hosted by:</strong> <%= link_to(@event.host.name, user_path(@event.host)) %></p>
 
+<h2>Attendees</h2>
+
+<% if @event.attendees.any? %>
+  <ul>
+    <% @event.attendees.each do |user| %>
+      <li>
+        <%= link_to(user.name, user_path(user)) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No attendees yet.</p>
+<% end %>
+
 <%= button_to "Attend Event", attendances_path,
               params: { attendance: {
                 attended_event_id: @event.id,

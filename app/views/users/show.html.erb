@@ -4,14 +4,29 @@
 
 <p><strong>Hosted Events:</strong></p>
 
-<% if @user_events.any? %>
+<% if @user.hosted_events.any? %>
   <ul>
-    <% @user_events.each do |event| %>
+    <% @user.hosted_events.each do |event| %>
       <li>
-        <%= event.name %>
+        <%= link_to(event.name, event_path(event)) %>
       </li>
     <% end %>
   </ul>
 <% else %>
   <p>User is not hosting any events.</p>
+<% end %>
+
+
+<p><strong>Attended Events:</strong></p>
+
+<% if @user.attended_events.any? %>
+  <ul>
+    <% @user.attended_events.each do |event| %>
+      <li>
+        <%= link_to(event.name, event_path(event)) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>User is not attending any events.</p>
 <% end %>
