@@ -17,16 +17,33 @@
 <% end %>
 
 
-<p><strong>Attended Events:</strong></p>
+<p><strong>Past attended events:</strong></p>
+<% past_events = @user.attended_events.where(date: ..Time.now) %>
 
-<% if @user.attended_events.any? %>
+<% if past_events.any? %>
   <ul>
-    <% @user.attended_events.each do |event| %>
+    <% past_events.each do |event| %>
       <li>
         <%= link_to(event.name, event_path(event)) %>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>User is not attending any events.</p>
+  <p>No past events.</p>
+<% end %>
+
+
+<p><strong>Future attended events:</strong></p>
+<% future_events = @user.attended_events.where(date: Time.now..) %>
+
+<% if future_events.any? %>
+  <ul>
+    <% future_events.each do |event| %>
+      <li>
+        <%= link_to(event.name, event_path(event)) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No future events.</p>
 <% end %>
