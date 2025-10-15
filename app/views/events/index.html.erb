@@ -1,8 +1,10 @@
-<h1>Upcoming Events</h1>
+<h1>All Events</h1>
 
-<% if @events.any? %>
+<h2>Upcoming Events</h2>
+<% future_events = @events.map { |event| event if event.future }.compact %>
+<% if future_events.any? %>
   <ul>
-    <% @events.each do |event| %>
+    <% future_events.each do |event| %>
       <li>
         <strong><%= link_to(event.name, event_path(event)) %></strong><br>
         Hosted by: <%= link_to(event.host.name, user_path(event.host)) %>
@@ -10,7 +12,22 @@
     <% end %>
   </ul>
 <% else %>
-  <p>No events found.</p>
+  <p>No past events found.</p>
+<% end %>
+
+<h2>Past Events</h2>
+<% past_events = @events.map { |event| event if event.past }.compact %>
+<% if past_events.any? %>
+  <ul>
+    <% past_events.each do |event| %>
+      <li>
+        <strong><%= link_to(event.name, event_path(event)) %></strong><br>
+        Hosted by: <%= link_to(event.host.name, user_path(event.host)) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No past events found.</p>
 <% end %>
 
 <p>
